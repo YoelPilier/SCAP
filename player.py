@@ -42,6 +42,9 @@ class MusicPlayer:
     def get_state(self):
         return self.state
     
+    def isPlaying(self):
+        return pygame.mixer.music.get_busy()
+    
     def __LoadM4A(self, file_path):
         audio = AudioSegment.from_file(file_path, "m4a")
         byteIO = io.BytesIO()
@@ -104,6 +107,12 @@ input('Presiona enter para reproducir la música')
 
 player.play()  # Reproducir la música
 
+
+if pygame.mixer.music.get_busy():
+    print("La música se está reproduciendo.")
+else:
+    print("La música se ha detenido.")
+    
 input('Presiona enter para pausar la música')
 
 player.load_file('test.flac')
@@ -111,3 +120,8 @@ player.load_file('test.flac')
 player.play()  # Reproducir la música
 
 input('Presiona enter para detener la música')
+
+if pygame.mixer.music.get_busy():
+    print("La música se está reproduciendo.")
+else:
+    print("La música se ha detenido.")
