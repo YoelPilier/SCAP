@@ -19,8 +19,10 @@ player.load_file('test.flac')
 player.play()  # Reproducir la música
 
 player.get_song_info()  # Obtener información de la canción    
-input('Presiona enter para detener la música')
+input('Presiona enter para detener la música') 
 player.load_file('test.mp3')
+print(player.track_playback_time())
+input('Presiona enter para reproducir la música')
 player.play()  # Reproducir la música
 player.get_song_info()  # Obtener información de la canción
 input('Presiona enter para detener la música')
