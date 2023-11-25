@@ -14,7 +14,7 @@ class MusicPlayer:
         self.prev_audio_file = None
         self.state = PlayerState.DETENIDO 
         self.ext = None     
-        self.Formatos_Permitidos = ['.ogg', '.wav', '.mp3', '.flac', '.m4a']
+        self.valid_ext = ['.ogg', '.wav', '.mp3', '.flac', '.m4a']
         self.fadeout=0
         
     def setFadeout(self, time):
@@ -23,7 +23,7 @@ class MusicPlayer:
     def load_file(self, file_path):
         # Obtener la extensión del archivo
         _,  ext = os.path.splitext(file_path)
-        if ext.lower()  in self.Formatos_Permitidos:
+        if ext.lower()  in self.valid_ext:
             self.ext = ext
             if self.audio_file == None:
                 self.audio_file = file_path
