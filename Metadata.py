@@ -1,4 +1,14 @@
 ﻿import mutagen
+ 
+
+# Metadata keys
+    
+TITLE = "title"
+ARTIST = "artist"
+ALBUM = "album"
+YEAR = "year"
+DURATION = "duration"
+
 
 def get_song_info(file,ext ):
     mutagen_file = mutagen.File(file )

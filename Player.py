@@ -97,8 +97,8 @@ class MusicPlayer:
         return pygame.mixer.music.get_volume()
  
     def get_song_info(self):
-        print(Metadata.get_song_info(self.audio_file, self.ext))
+        return  Metadata.get_song_info(self.audio_file, self.ext) 
       
     def track_playback_time(self):
-        print(f"Tiempo de reproducción: {pygame.mixer.music.get_pos() / 1000} segundos")
+       return pygame.mixer.music.get_pos() / 1000
         
