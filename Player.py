@@ -2,13 +2,11 @@
 import pygame
 import io
 from pydub import AudioSegment
+from States import PlayerState
 
-from enum import Enum
 
-class PlayerState(Enum):
-    REPRODUCIENDO = 1
-    EN_PAUSA = 2
-    DETENIDO = 3
+
+
 
 Formatos_Permitidos = ['.ogg', '.wav', '.mp3', '.flac', '.m4a']
 
@@ -57,7 +55,7 @@ class MusicPlayer:
         match self.state:
             case PlayerState.REPRODUCIENDO:
                 if self.audio_file != self.prev_audio_file:
-                    self.stop()
+                    pygame.mixer.music.fadeout(2000)
                     self.state = PlayerState.DETENIDO
                     self.prev_audio_file = self.audio_file
                     self.play()
@@ -89,39 +87,10 @@ class MusicPlayer:
         
         
     def set_volume(self, volume):
+        volume = max(0, min(volume, 1))
         pygame.mixer.music.set_volume(volume)
 
     def get_volume(self):
         return pygame.mixer.music.get_volume()
  
  
-player = MusicPlayer()
-player.load_file('test.m4a')
-player.play()  # Reproducir la música
-player.set_volume(0.1)  # Establecer volumen a 50%
-
-input('Presiona enter para detener la música')
-player.stop()  # Detener la música
-
-input('Presiona enter para reproducir la música')
-
-player.play()  # Reproducir la música
-
-
-if pygame.mixer.music.get_busy():
-    print("La música se está reproduciendo.")
-else:
-    print("La música se ha detenido.")
-    
-input('Presiona enter para pausar la música')
-
-player.load_file('test.flac')
-
-player.play()  # Reproducir la música
-
-input('Presiona enter para detener la música')
-
-if pygame.mixer.music.get_busy():
-    print("La música se está reproduciendo.")
-else:
-    print("La música se ha detenido.")
