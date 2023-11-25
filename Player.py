@@ -3,12 +3,7 @@ import pygame
 import io
 from pydub import AudioSegment
 from States import PlayerState
-
-
-
-
-
-Formatos_Permitidos = ['.ogg', '.wav', '.mp3', '.flac', '.m4a']
+import Metadata
 
 
 class MusicPlayer:
@@ -19,11 +14,16 @@ class MusicPlayer:
         self.prev_audio_file = None
         self.state = PlayerState.DETENIDO 
         self.ext = None     
-
+        self.Formatos_Permitidos = ['.ogg', '.wav', '.mp3', '.flac', '.m4a']
+        self.fadeout=0
+        
+    def setFadeout(self, time):
+        self.fadeout = time   
+        
     def load_file(self, file_path):
         # Obtener la extensión del archivo
         _,  ext = os.path.splitext(file_path)
-        if ext.lower()  in Formatos_Permitidos:
+        if ext.lower()  in self.Formatos_Permitidos:
             self.ext = ext
             if self.audio_file == None:
                 self.audio_file = file_path
@@ -55,7 +55,10 @@ class MusicPlayer:
         match self.state:
             case PlayerState.REPRODUCIENDO:
                 if self.audio_file != self.prev_audio_file:
-                    pygame.mixer.music.fadeout(2000)
+                    if self.fadeout > 0:
+                        pygame.mixer.music.fadeout(self.fadeout)
+                    else:
+                        pygame.mixer.music.stop()
                     self.state = PlayerState.DETENIDO
                     self.prev_audio_file = self.audio_file
                     self.play()
@@ -93,4 +96,9 @@ class MusicPlayer:
     def get_volume(self):
         return pygame.mixer.music.get_volume()
  
- 
+    def get_song_info(self):
+        print(Metadata.get_song_info(self.audio_file, self.ext))
+      
+    def track_playback_time(self):
+        print(f"Tiempo de reproducción: {pygame.mixer.music.get_pos() / 1000} segundos")
+        
