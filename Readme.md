@@ -2,3 +2,4 @@
 -mutagen
 -pygame
 -pydub
+-urwid
