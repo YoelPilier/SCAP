@@ -11,7 +11,7 @@ class PlayList:
         self.queue = []
         self.current = -1 
         self.shuffle = True
-     
+        self.focused = -1     
     def __len__(self):
         return len(self.files)
     
@@ -57,6 +57,7 @@ class PlayList:
         
         if self.current < len(self.files):
             self.current += 1
+            self.focused = self.current
             file=self.files[self.current]
             data=self.metadata[self.current]
             self.queue.append(self.current)
@@ -70,6 +71,7 @@ class PlayList:
             if index==0:
                 return None
             self.current=self.queue[index-1]
+            self.focused = self.current
             self.queue.append(self.current)
             return self.files[self.current], self.metadata[self.current]
         
@@ -79,7 +81,21 @@ class PlayList:
     def Jump(self, index):
         if index < len(self.files):
             self.current=index
+            self.focused = self.current
             self.queue.append(self.current)
             return self.files[self.current], self.metadata[self.current]
         else:
             return None
+        
+    def Move_up(self):
+        if self.focused > 0:
+            self.focused -= 1
+            return self.focused
+        
+    def Move_down(self):
+        if self.focused < len(self.files):
+            self.focused += 1
+            return self.focused
+        
+    def Get_focused(self):
+        return self.focused

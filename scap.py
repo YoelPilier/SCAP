@@ -24,11 +24,11 @@ while True:
         pass
         time.sleep(1)
 print("Fin de la lista de reproduccion") 
-"""
-from __future__ import annotations
-
+""" 
+import asyncio
 import urwid
-
+from Player import MusicPlayer
+import PlayList as pl
 
 palette = [
     ('pg_normal', 'white', 'black'),
@@ -36,6 +36,14 @@ palette = [
   
     ('selected', 'black', 'white'),
 ]
+
+player = MusicPlayer()
+
+playlist = pl.PlayList(player.valid_ext)
+
+playlist.add("testmusic")
+
+asyncio.get_event_loop().run_until_complete(player.play())
 
 
 class CustomProgressBar(urwid.ProgressBar):
@@ -51,8 +59,7 @@ class CustomProgressBar(urwid.ProgressBar):
  #logica de botones
  
 def on_play_pause_button_click(button):
-    # Código para reproducir/pausar la música
-    raise urwid.ExitMainLoop()
+    pass
 
 def on_stop_button_click(button):
     # Código para detener la música
@@ -104,7 +111,15 @@ class CustomListBox(urwid.ListBox):
                 self.set_focus(self.focus_position - 1)
         else:
             return super().keypress(size, key)
- 
+     
+    def mouse_event(self, size, event, button, col, row, focus):
+        if button == 4:
+            self.keypress(size, 'up')
+        elif button == 5:
+            self.keypress(size, 'down')
+         
+        else:
+            return super().mouse_event(size, event, button, col, row, focus)
         
 #plisbx = urwid.ListBox(lista)
 
@@ -136,3 +151,34 @@ loop = urwid.MainLoop(frame, palette=palette )
  
 # Ejecución del bucle principal
 loop.run()
+
+
+
+"""
+        
+handle input 
+
+
+
+def handle_input(input):
+    if input == 'media play':
+        song = playlist.Next()
+        if song is not None:
+            song, data = song
+            asyncio.create_task(play_song(song))
+    elif input == 'media stop':
+        stop_song()
+    elif input == 'media next':
+        song = playlist.Next()
+        if song is not None:
+            song, data = song
+            asyncio.create_task(play_song(song))
+    elif input == 'media prev':
+        song = playlist.Prev()
+        if song is not None:
+            song, data = song
+            asyncio.create_task(play_song(song))
+
+urwid.MainLoop(widget, palette, event_loop=loop, unhandled_input=handle_input).run()        
+        
+"""
