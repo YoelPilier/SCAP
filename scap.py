@@ -30,128 +30,109 @@ from __future__ import annotations
 import urwid
 
 
-def menu_button(caption, callback):
-
-    button = urwid.Button(caption)
-
-    urwid.connect_signal(button, 'click', callback)
-
-    return urwid.AttrMap(button, None, focus_map='reversed')
-
-
-def sub_menu(caption, choices):
-
-    contents = menu(caption, choices)
-
-    def open_menu(button):
-
-        return top.open_box(contents)
-
-    return menu_button([caption, '...'], open_menu)
+palette = [
+    ('pg_normal', 'white', 'black'),
+    ('pg_complete', 'black', 'white'),
+  
+    ('selected', 'black', 'white'),
+]
 
 
-def menu(title, choices):
-
-    body = [urwid.Text(title), urwid.Divider()]
-
-    body.extend(choices)
-
-    return urwid.ListBox(urwid.SimpleFocusListWalker(body))
-
-
-def item_chosen(button):
-
-    response = urwid.Text(['You chose ', button.label, '\n'])
-
-    done = menu_button('Ok', exit_program)
-
-    top.open_box(urwid.Filler(urwid.Pile([response, done])))
+class CustomProgressBar(urwid.ProgressBar):
+    def set_text(self, text: str) -> None:
+        self.customtext=text
+        
+    def get_text(self) -> str:
+        return self.customtext
+     
 
 
-def exit_program(button):
-
+ 
+ #logica de botones
+ 
+def on_play_pause_button_click(button):
+    # Código para reproducir/pausar la música
     raise urwid.ExitMainLoop()
 
+def on_stop_button_click(button):
+    # Código para detener la música
+    pass
 
-menu_top = menu('Main Menu', [
+def on_previous_button_click(button):
+    # Código para ir a la canción anterior
+    pass
 
-    sub_menu('Applications', [
-
-        sub_menu('Accessories', [
-
-            menu_button('Text Editor', item_chosen),
-
-            menu_button('Terminal', item_chosen),
-
-        ]),
-
-    ]),
-
-    sub_menu('System', [
-
-        sub_menu('Preferences', [
-
-            menu_button('Appearance', item_chosen),
-
-        ]),
-
-        menu_button('Lock Screen', item_chosen),
-
-    ]),
-
-])
+def on_next_button_click(button):
+    # Código para ir a la canción siguiente
+    pass
 
 
-class CascadingBoxes(urwid.WidgetPlaceholder):
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+# Creación de un widget de texto para el título, alineado en la parte superior
+ 
+lista = urwid.SimpleFocusListWalker([]  )
 
-    max_box_levels = 4
-
-
-    def __init__(self, box):
-
-        super().__init__(urwid.SolidFill('/'))
-
-        self.box_level = 0
-
-        self.open_box(box)
-
-
-    def open_box(self, box):
-
-        self.original_widget = urwid.Overlay(urwid.LineBox(box),
-
-            self.original_widget,
-
-            align='center', width=(urwid.WHSettings.RELATIVE, 80),
-
-            valign='middle', height=(urwid.WHSettings.RELATIVE, 80),
-
-            min_width=24, min_height=8,
-
-            left=self.box_level * 3,
-
-            right=(self.max_box_levels - self.box_level - 1) * 3,
-
-            top=self.box_level * 2,
-
-            bottom=(self.max_box_levels - self.box_level - 1) * 2)
-
-        self.box_level += 1
+ 
+ 
+ 
+ 
+for i in range(200):
+    lista.append(urwid.AttrMap( urwid.Text(f"Item {i}"),None,focus_map='selected') )
+ 
 
 
+
+
+# Creación de una lista de canciones
+ 
+class CustomListBox(urwid.ListBox):
     def keypress(self, size, key):
-
-        if key == 'esc' and self.box_level > 1:
-
-            self.original_widget = self.original_widget[0]
-
-            self.box_level -= 1
-
+        if key == 'down':
+            try:
+                self.set_focus(self.focus_position + 1)
+            except IndexError:
+                pass  # ya en el último elemento
+        elif key == 'up':
+            if self.focus_position > 0:
+                self.set_focus(self.focus_position - 1)
         else:
-
             return super().keypress(size, key)
+ 
+        
+#plisbx = urwid.ListBox(lista)
+
+plisbx = CustomListBox(lista)
+
+playlist = urwid.LineBox(plisbx, title="Lista de reproducción")
+
+# Creación de un widget de edición para los comandos, alineado en la parte inferior
+prompt =  urwid.LineBox(urwid.Edit(multiline=False), title="Comandos") 
+
+progress_bar = CustomProgressBar('pg_normal', 'pg_complete', current=0, done=100 ) 
+
+play_pause_button = urwid.Button('play ', on_press=on_play_pause_button_click)
+stop_button = urwid.Button('stop', on_press=on_stop_button_click)
+previous_button = urwid.Button('prev', on_press=on_previous_button_click)
+next_button = urwid.Button('next', on_press=on_next_button_click)
+
+buttons = urwid.GridFlow([previous_button, play_pause_button, stop_button, next_button], 8, 2, 0, 'center')
 
 
-top = CascadingBoxes(menu_top)
+footer_stack = urwid.Pile([buttons, progress_bar, prompt])
+frame = urwid.Frame(playlist, footer=footer_stack)
+ 
+progress_bar.set_text("Cargando...")
+progress_bar.set_completion(50)
 
-urwid.MainLoop(top, palette=[('reversed', 'standout', '')]).run()
+# Creación del bucle principal con la pila y la paleta de colores
+loop = urwid.MainLoop(frame, palette=palette )
+ 
+# Ejecución del bucle principal
+loop.run()
