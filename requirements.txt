@@ -1,0 +1,4 @@
+﻿mutagen
+pygame
+pydub
+urwid

@@ -127,10 +127,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-/*.flac
-/*.flv
-/*.mp3
-/*.mp4
-/*.m4a
-/testmusic
+ 
