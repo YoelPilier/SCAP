@@ -1,0 +1,4 @@
+﻿Dependencias:
+-mutagen
+-pygame
+-pydub
