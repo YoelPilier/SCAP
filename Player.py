@@ -3,7 +3,6 @@ import pygame
 import io
 from pydub import AudioSegment
 from States import PlayerState
-import Metadata
 
 
 class MusicPlayer:
@@ -95,9 +94,7 @@ class MusicPlayer:
 
     def get_volume(self):
         return pygame.mixer.music.get_volume()
- 
-    def get_song_info(self):
-        return  Metadata.get_song_info(self.audio_file, self.ext) 
+  
       
     def track_playback_time(self):
        return pygame.mixer.music.get_pos() / 1000
