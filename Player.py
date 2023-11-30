@@ -99,4 +99,9 @@ class MusicPlayer:
     def track_playback_time(self):
        return pygame.mixer.music.get_pos() / 1000
     
-     
+    def jump_to(self, time):
+        pygame.mixer.music.set_pos(time)
+         
+         
+
+ 
