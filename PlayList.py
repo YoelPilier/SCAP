@@ -8,7 +8,8 @@ class PlayList:
          
         self.files = []
         self.metadata = []  
-        self.queue = []
+        self.queue = [] 
+        self.playlist = []
         self.current = -1 
         self.shuffle = True
         self.focused = -1     
@@ -25,6 +26,7 @@ class PlayList:
                 meta=Metadata.get_song_info(file, ext)
                 meta["index"]=len(self.files)-1                         
                 self.metadata.append(meta)
+                self.playlist.append(f"{meta['index']+1} - {meta['title']} - {meta['artist']} - {meta['album']}")
         elif os.path.isdir(file_path):
             for dirpath, _, filenames in os.walk(file_path):
                 for filename in filenames:
@@ -35,7 +37,8 @@ class PlayList:
                         meta=Metadata.get_song_info(file, ext)
                         meta["index"]=len(self.files)-1                         
                         self.metadata.append(meta)
-                        
+                        self.playlist.append((f"{meta['title']} - {meta['artist']} - {meta['album']}",meta['index']))
+
                                                 
     def remove(self, index):
         if index < len(self.files):
@@ -99,3 +102,12 @@ class PlayList:
         
     def Get_focused(self):
         return self.focused
+    
+    def Get_Playlist(self,filter=None):
+        if filter:
+            return [song for song in self.playlist if filter.lower() in song[0].lower()]
+        else:
+            return self.playlist
+ 
+        
+ 
