@@ -93,12 +93,12 @@ class PlayList:
     def Move_up(self):
         if self.focused > 0:
             self.focused -= 1
-            return self.focused
+        return self.focused
         
     def Move_down(self):
         if self.focused < len(self.files):
             self.focused += 1
-            return self.focused
+        return self.focused
         
     def Get_focused(self):
         return self.focused
