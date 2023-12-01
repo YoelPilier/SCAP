@@ -61,10 +61,7 @@ class MusicPlayer:
                     self.state = PlayerState.DETENIDO
                     self.prev_audio_file = self.audio_file
                     self.play()
-                else:
-                    pygame.mixer.music.pause()
-                    self.state = PlayerState.EN_PAUSA
-                 
+       
             case PlayerState.EN_PAUSA:
                 pygame.mixer.music.unpause()
                 self.state = PlayerState.REPRODUCIENDO
@@ -79,6 +76,12 @@ class MusicPlayer:
                 pygame.mixer.music.play()
                 self.state = PlayerState.REPRODUCIENDO
         return
+    
+    def pause(self):
+        if self.state == PlayerState.REPRODUCIENDO:
+            pygame.mixer.music.pause()
+            self.state = PlayerState.EN_PAUSA
+            return
      
    
     def stop(self):

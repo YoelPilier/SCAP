@@ -102,11 +102,12 @@ class PlayList:
         return self.focused
         
     def Get_focused(self):
-        return self.focused
+        return  self.files[self.focused], self.metadata[self.focused]
     
     def Set_focused(self, index):
         self.focused = index
-        return self.focused
+    
+    
     
         
     def Get_Playlist(self,filter=None):

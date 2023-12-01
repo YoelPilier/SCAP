@@ -20,9 +20,8 @@ class PlayListWidget(urwid.ListBox):
         self.focus_callback(button,index)
                
     def Play(self, button,index):
-        if self.focus_position != index:
-            self.play_callback(button,index)
-            self.UpdateFocus(button,index)
+        self.play_callback(button,index)
+        self.UpdateFocus(button,index)
       
     
     def keypress(self, size, key):
