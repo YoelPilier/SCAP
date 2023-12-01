@@ -13,7 +13,7 @@ class PlayListWidget(urwid.ListBox):
     def UpdateList(self, items):
         self.listwalker.clear()
         for item in items:
-            self.listwalker.append(urwid.AttrMap(ClickableText(item[0], focus_callback=self.UpdateFocus, play_callback=self.play_callback, CallbackArgs=item[1]),None,focus_map='selected') )
+            self.listwalker.append(urwid.AttrMap(ClickableText(item[0], focus_callback=self.UpdateFocus, play_callback=self.play_callback, CallbackArgs=item[1] ),None,focus_map='selected') )
     
     def UpdateFocus(self, button,index):
         self.set_focus(index)

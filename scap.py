@@ -68,6 +68,8 @@ plw.UpdateList(pl.Get_Playlist())
 
 
 header=urwid.AttrMap(Header("SCAP"), 'normal')
+
+
 frame=urwid.AttrMap( urwid.Frame(header=header,body=plw) , 'normal')
 
 
