@@ -66,11 +66,10 @@ plw=PlayListWidget(play_callback=play_onclick_callback, focus_callback=focus_cal
 
 plw.UpdateList(pl.Get_Playlist())
 
+ 
 
-header=urwid.AttrMap(Header("SCAP"), 'normal')
 
-
-frame=urwid.AttrMap( urwid.Frame(header=header,body=plw) , 'normal')
+frame=urwid.AttrMap( urwid.Frame(header=Header("SCAP"),body=plw) , 'normal')
 
 
 
