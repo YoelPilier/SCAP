@@ -2,7 +2,7 @@
 import pygame
 import io
 from pydub import AudioSegment
-from States import PlayerState
+from player.States import PlayerState
 
 
 class MusicPlayer:
@@ -104,4 +104,5 @@ class MusicPlayer:
          
          
 
+ 
  

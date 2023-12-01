@@ -1,7 +1,7 @@
 ﻿import os
 import random
-import Metadata
-from Util import To_Minutes
+import playlist.Metadata as Metadata
+from playlist.Util import To_Minutes
 
 class PlayList:
     def __init__(self, valid_ext):

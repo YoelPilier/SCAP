@@ -27,8 +27,8 @@ print("Fin de la lista de reproduccion")
 """ 
 import asyncio
 import urwid
-from Player import MusicPlayer
-import PlayList as pl
+from player.Player import MusicPlayer
+import playlist.PlayList as pl
 
 palette = [
     ('pg_normal', 'white', 'black'),
