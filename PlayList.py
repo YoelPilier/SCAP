@@ -111,8 +111,3 @@ class PlayList:
             return self.playlist
  
         
- 
-pl=PlayList(('.mp3', '.m4a', '.wav', '.flac'))
-pl.add('testmusic/')
-
-print(pl.Get_Playlist())
