@@ -1,23 +1,40 @@
 ﻿import asyncio
 import urwid
+from cli.playlist import PlayListWidget
+from playlist.PlayList import PlayList
+from player.Player import MusicPlayer
+from cli.cliSets import palette
+
+musicplayer = MusicPlayer()
 
 
-palette = [ 
-    ('altered', 'black', 'light red'),   
-    ('normal', 'light red', 'black'),
-    ('pg_normal', 'light red', 'black'),
-    ('pg_complete', 'black', 'light red'),
-  
-    ('selected', 'black', 'light red'),
-]
+pl=PlayList(musicplayer.valid_ext)
+pl.add("testmusic")
+
+ 
+
+def play_callback(button, idx):
+    song,data= pl.Jump(idx)
+    musicplayer.load_file(song)
+    musicplayer.play()
+    
+    
+def focus_callback(button, data):
+    pl
+    pass
+
+
+
+
+
+plw=PlayListWidget(play_callback=play_callback, focus_callback=focus_callback)
+
+
+plw.UpdateList(pl.Get_Playlist())
 
  
 
- 
- 
-
-
-frame=urwid.AttrMap( urwid.Frame(body=filler) , 'normal')
+frame=urwid.AttrMap( urwid.Frame(body=plw) , 'normal')
 
 
 

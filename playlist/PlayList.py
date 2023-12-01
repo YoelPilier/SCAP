@@ -104,6 +104,11 @@ class PlayList:
     def Get_focused(self):
         return self.focused
     
+    def Set_focused(self, index):
+        self.focused = index
+        return self.focused
+    
+        
     def Get_Playlist(self,filter=None):
         if filter:
             return [song for song in self.playlist if filter.lower() in song[0].lower()]
