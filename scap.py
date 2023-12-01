@@ -2,26 +2,23 @@
 import urwid
 
 
-palette = [
-    ('pg_normal', 'white', 'black'),
-    ('pg_complete', 'black', 'white'),
+palette = [ 
+    ('altered', 'black', 'light red'),   
+    ('normal', 'light red', 'black'),
+    ('pg_normal', 'light red', 'black'),
+    ('pg_complete', 'black', 'light red'),
   
-    ('selected', 'black', 'white'),
+    ('selected', 'black', 'light red'),
 ]
 
+ 
+
+ 
+ 
 
 
+frame=urwid.AttrMap( urwid.Frame(body=filler) , 'normal')
 
-def KeyboardEvents():
-    pass 
-
-
-
-
-filler = urwid.Filler(urwid.Text("Hola mundo"), 'top')
-
-
-frame=urwid.Frame(body=filler)
 
 
 
@@ -29,6 +26,6 @@ frame=urwid.Frame(body=filler)
 
 evl=urwid.AsyncioEventLoop(loop=asyncio.get_event_loop())
 
-loop=urwid.MainLoop(frame, palette=palette, event_loop=evl, unhandled_input=KeyboardEvents)
+loop=urwid.MainLoop(frame, palette=palette, event_loop=evl )
 
 loop.run()
