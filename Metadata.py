@@ -8,6 +8,7 @@ ARTIST = "artist"
 ALBUM = "album"
 YEAR = "year"
 DURATION = "duration"
+INDEX = "index"
 
 
 def get_song_info(file,ext ):
