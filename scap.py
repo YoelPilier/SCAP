@@ -7,6 +7,7 @@ from cli.Buttons import Buttons
 from cli.Body import Body
 from cli.MediaKeys import MediaKeysController
 from cli.SongProgress import SongProgressBar
+from cli.textbox import TextBox
 from playlist.PlayList import PlayList
 from playlist import Metadata
 from player.Player import MusicPlayer
@@ -17,7 +18,7 @@ musicplayer = MusicPlayer()
 pl=PlayList(musicplayer.valid_ext)
 progres=SongProgressBar('pg_normal', 'pg_complete', 0, 100 )
  
-pl.add("../../externo/Musica/")
+#pl.add("../../externo/Musica/")
 
 plw=PlayListWidget()
 
@@ -94,9 +95,10 @@ def Stop(Button=None):
 def Add(ruta):
     try:
         pl.add(ruta)
+        plw.UpdateList(pl.Get_Playlist())
     except Exception as e:
         pass
-
+ 
 
 
 def play_onclick_callback( Button=None, idx=-1):
@@ -112,10 +114,7 @@ def focus_callback(Button=None, idx=-1):
     except Exception as e:
         pass
 
-
-
-
-
+ 
 
 def playing(loop=None, user_data=None):
     if musicplayer.get_state() == PlayerState.REPRODUCIENDO:
@@ -138,10 +137,44 @@ MediaKeysController(Play_Focused, Next, Prev).start_listening()
 
 
 plw.Set_Callbacks(focus_callback=focus_callback, play_callback=play_onclick_callback)
-plw.UpdateList(pl.Get_Playlist())
+#plw.UpdateList(pl.Get_Playlist())
+
+def Handle_Command(text):
+    if text.startswith('>'):
+        text=text[1:].strip() 
+         
+        
+        Add(text)
+    elif text.startswith('#'):
+        text=text[1:].strip()
+        
+        pl.search(text)
+        plw.set_focus(pl.focused)
+        plw.set_focus_valign('middle') 
+    elif text == 'exit':
+        raise urwid.ExitMainLoop()
+    elif text == 'play':
+        Play(pl.focused)
+    elif text == 'pause':
+        Pause()
+    elif text == 'stop':
+        Stop()
+    elif text == 'next':
+        Next()
+    elif text == 'prev':
+        Prev()
+    elif text == 'random':
+        pl.shuffle = not pl.shuffle
+            
+        
+ 
+command_prompt = TextBox("D:", Handle_Command)
+ 
+ 
+
 
 botones=Buttons(play=Play_Focused, stop=Stop, next=Next, prev=Prev  ) 
-footer_stack = urwid.Pile([urwid.Divider("*"),progres, urwid.Divider("*"),   botones,urwid.Divider("*")])
+footer_stack = urwid.Pile([urwid.Divider("*"),progres, urwid.Divider("*"),   botones,urwid.Divider("*"),command_prompt,urwid.Divider("*")])
 
 frame=urwid.AttrMap( Body(header=Header(),body=plw,footer=footer_stack) , 'normal')
 

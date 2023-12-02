@@ -14,6 +14,11 @@ class PlayList:
         self.current = -1 
         self.shuffle = True
         self.focused = -1    
+        # Obtener el directorio home del usuario actual
+        home_dir = os.path.expanduser("~")
+
+        # Cambiar el directorio de trabajo actual al directorio home
+        os.chdir(home_dir)
     def __len__(self):
         return len(self.files)
     
@@ -110,12 +115,11 @@ class PlayList:
         self.focused = index
     
  
-    
+    def search(self, text): 
+        for index, file in enumerate(self.files):   
+            if text.lower() in file.lower(): self.focused = index
         
-    def Get_Playlist(self,filter=None):
-        if filter:
-            return [song for song in self.playlist if filter.lower() in song[0].lower()]
-        else:
-            return self.playlist
+    def Get_Playlist(self ):
+        return self.playlist
  
         

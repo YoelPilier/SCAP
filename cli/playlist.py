@@ -30,6 +30,8 @@ class PlayListWidget(urwid.ListBox):
       
     
     def keypress(self, size, key):
+        if len(self.listwalker) == 0:
+            return super().keypress(size, key)
         if key == 'down':
             try:
                 self.UpdateFocus(None,index=self.focus_position + 1)
