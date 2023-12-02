@@ -8,9 +8,7 @@ class Body(urwid.Frame):
     
     
     def keypress(self, size, key):
-        if key == 'tab':
-            
-       
+        if key == 'tab': 
             if self.focus_part == 'body':
                 self.set_focus('footer')
             elif self.focus_part == 'footer':
