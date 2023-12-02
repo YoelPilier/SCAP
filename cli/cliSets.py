@@ -1,8 +1,9 @@
+ 
 palette = [ 
-    ('altered', 'black', 'light red'),   
-    ('normal', 'light red', 'black'),
-    ('pg_normal', 'light red', 'black'),
-    ('pg_complete', 'black', 'light red'),
+    ('altered', 'black', 'white'),   
+    ('normal', 'white', 'black'),
+    ('pg_normal', 'white', 'black'),
+    ('pg_complete', 'black', 'white'),
   
-    ('selected', 'black', 'light red'),
+    ('selected', 'black', 'white'),
 ]

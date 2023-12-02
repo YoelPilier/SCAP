@@ -15,13 +15,15 @@ class MusicPlayer:
         self.ext = None     
         self.valid_ext = ['.ogg', '.wav', '.mp3', '.flac', '.m4a']
         self.fadeout=0
+        self.length=1
         
     def setFadeout(self, time):
         self.fadeout = time   
         
-    def load_file(self, file_path):
+    def load_file(self, file_path,length):
         # Obtener la extensión del archivo
         _,  ext = os.path.splitext(file_path)
+        self.length=length
         if ext.lower()  in self.valid_ext:
             self.ext = ext
             if self.audio_file == None:
@@ -105,7 +107,10 @@ class MusicPlayer:
     def jump_to(self, time):
         pygame.mixer.music.set_pos(time)
          
-         
+   
+    
+    def get_Progress(self):
+        return (self.track_playback_time() / self.length) * 100        
 
  
  
