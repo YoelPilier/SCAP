@@ -4,3 +4,4 @@
 -pygame
 -pydub
 -urwid
+-pynput

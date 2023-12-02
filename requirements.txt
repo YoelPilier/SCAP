@@ -2,3 +2,4 @@
 pygame
 pydub
 urwid
+pynput

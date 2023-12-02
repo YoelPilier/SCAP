@@ -9,7 +9,7 @@ from cli.Body import Body
 from playlist.PlayList import PlayList
 from player.Player import MusicPlayer
 
-
+ 
 musicplayer = MusicPlayer()
 
 pl=PlayList(musicplayer.valid_ext)
