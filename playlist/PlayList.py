@@ -13,7 +13,7 @@ class PlayList:
         self.playlist = []
         self.current = -1 
         self.shuffle = True
-        self.focused = -1     
+        self.focused = -1    
     def __len__(self):
         return len(self.files)
     
@@ -107,7 +107,7 @@ class PlayList:
     def Set_focused(self, index):
         self.focused = index
     
-    
+ 
     
         
     def Get_Playlist(self,filter=None):

@@ -5,9 +5,10 @@ from cli.cliSets import palette
 from cli.Header import Header
 from cli.Buttons import Buttons
 from cli.Body import Body
-
+from cli.MediaKeys import MediaKeysController
 from playlist.PlayList import PlayList
 from player.Player import MusicPlayer
+from player.States import PlayerState
 
  
 musicplayer = MusicPlayer()
@@ -31,17 +32,22 @@ def Pause():
         pass
 
 
-def Play_Focused(Button):
+def Play_Focused(Button=None):
     try:
-        song, data = pl.Jump(pl.focused)
-        musicplayer.load_file(song)
-        musicplayer.play()
+        state=musicplayer.get_state()
+        if state== PlayerState.DETENIDO:
+            Play(pl.focused)
+        elif state == PlayerState.EN_PAUSA:
+            musicplayer.play()
+        if state == PlayerState.REPRODUCIENDO:
+            musicplayer.pause()
+        
     except Exception as e:
         pass
     
         
 
-def Next(Button):
+def Next(Button=None):
     try:
         song, data = pl.Next()
         musicplayer.load_file(song)
@@ -49,7 +55,7 @@ def Next(Button):
     except Exception as e:
         pass
 
-def Prev(Button):
+def Prev(Button=None):
     try:
         song, data = pl.Prev()
         musicplayer.load_file(song)
@@ -59,7 +65,7 @@ def Prev(Button):
     
  
     
-def Stop(Button):
+def Stop(Button=None):
     try: 
         musicplayer.stop()
     except Exception as e:
@@ -73,19 +79,22 @@ def Add(ruta):
 
 
 
-def play_onclick_callback(button, idx):
+def play_onclick_callback( Button=None, idx=-1):
     try:
         Play(idx)
     except Exception as e:
         pass
     
     
-def focus_callback(button, idx):
+def focus_callback(Button=None, idx=-1):
     try:
         pl.Set_focused(idx)
     except Exception as e:
         pass
   
+
+MediaKeysController(Play_Focused, Next, Prev).start_listening()
+
 
 plw=PlayListWidget(play_callback=play_onclick_callback, focus_callback=focus_callback)
 
