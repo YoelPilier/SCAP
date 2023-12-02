@@ -33,6 +33,9 @@ class PlayListWidget(urwid.ListBox):
         elif key == 'up':
             if self.focus_position > 0:
                 self.UpdateFocus(None,index=self.focus_position - 1)
+        elif key == 'enter':
+            self.Play(None,index=self.focus_position)        
+                
         else:
             return super().keypress(size, key)
      
