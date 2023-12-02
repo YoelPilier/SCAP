@@ -1,12 +1,13 @@
 ﻿import os
 import random
+import time
 import playlist.Metadata as Metadata
 from playlist.Util import To_Minutes
 
 class PlayList:
     def __init__(self, valid_ext):
         self.valid_ext = valid_ext
-        random.seed() 
+        random.seed(time.time()) 
         self.files = []
         self.metadata = []  
         self.queue = [] 
