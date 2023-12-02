@@ -1,5 +1,10 @@
 ﻿def To_Minutes(Seconds):
-    minutes = int(Seconds // 60)
-    seconds = round(Seconds % 60)
+    try:
+        Seconds=int(Seconds)
+        seconds=int(Seconds)
+        minutes = int(Seconds // 60)
+        seconds = round(Seconds % 60)
     
-    return f"{minutes}:{seconds}"
+        return f"{minutes}:{seconds}"
+    except Exception as e:
+        return "wrong format"

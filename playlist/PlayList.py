@@ -6,7 +6,7 @@ from playlist.Util import To_Minutes
 class PlayList:
     def __init__(self, valid_ext):
         self.valid_ext = valid_ext
-         
+        random.seed() 
         self.files = []
         self.metadata = []  
         self.queue = [] 
@@ -31,6 +31,7 @@ class PlayList:
         elif os.path.isdir(file_path):
             for dirpath, _, filenames in os.walk(file_path):
                 for filename in filenames:
+                     
                     _, ext = os.path.splitext(filename)
                     if ext.lower() in self.valid_ext:
                         file=os.path.join(dirpath, filename)
@@ -38,6 +39,7 @@ class PlayList:
                         meta=Metadata.get_song_info(file, ext)
                         meta[Metadata.INDEX]=len(self.files)-1                         
                         self.metadata.append(meta)
+                        
                         self.playlist.append((f"{meta[Metadata.INDEX]+1} - {meta[Metadata.TITLE]} - {meta[Metadata.ARTIST]} - {meta[Metadata.ALBUM]} - {To_Minutes(meta[Metadata.DURATION])}",meta[Metadata.INDEX]))
 
                                                 

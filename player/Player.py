@@ -110,7 +110,10 @@ class MusicPlayer:
    
     
     def get_Progress(self):
-        return (self.track_playback_time() / self.length) * 100        
+        try:
+            return (self.track_playback_time() / self.length) * 100
+        except Exception as e:
+            return 0     
 
  
  

@@ -17,14 +17,17 @@ musicplayer = MusicPlayer()
 pl=PlayList(musicplayer.valid_ext)
 progres=SongProgressBar('pg_normal', 'pg_complete', 0, 100 )
  
-pl.add("testmusic")
+pl.add("../../externo/Musica/")
 
-
+plw=PlayListWidget()
 
  
 def Play(idx):
     try:
         song, data = pl.Jump(idx)
+        if  pl.current != -1:
+            plw.set_focus(pl.current)
+            plw.set_focus_valign('middle')  
         progres.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]} - {data[Metadata.ALBUM]}")
         musicplayer.load_file(song, data[Metadata.DURATION])
         musicplayer.play()
@@ -43,6 +46,9 @@ def Play_Focused(Button=None):
         state=musicplayer.get_state()
         if state== PlayerState.DETENIDO:
             Play(pl.focused)
+            if  pl.current != -1:
+                plw.set_focus(pl.current)
+                plw.set_focus_valign('middle') 
         elif state == PlayerState.EN_PAUSA:
             musicplayer.play()
         if state == PlayerState.REPRODUCIENDO:
@@ -56,6 +62,9 @@ def Play_Focused(Button=None):
 def Next(Button=None):
     try:
         song, data = pl.Next()
+        if  pl.current != -1:
+            plw.set_focus(pl.current)
+            plw.set_focus_valign('middle')  
         progres.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]} - {data[Metadata.ALBUM]}")
         musicplayer.load_file(song, data[Metadata.DURATION])
         musicplayer.play()
@@ -65,6 +74,9 @@ def Next(Button=None):
 def Prev(Button=None):
     try:
         song, data = pl.Prev()
+        if  pl.current != -1:
+            plw.set_focus(pl.current)
+            plw.set_focus_valign('middle') 
         progres.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]} - {data[Metadata.ALBUM]}")
         musicplayer.load_file(song, data[Metadata.DURATION])
         musicplayer.play()
@@ -100,12 +112,20 @@ def focus_callback(Button=None, idx=-1):
     except Exception as e:
         pass
 
+
+
+
+
+
 def playing(loop=None, user_data=None):
     if musicplayer.get_state() == PlayerState.REPRODUCIENDO:
         if not  musicplayer.isPlaying():
             Next()
-            progres.set_prog(0) 
+            progres.set_prog(0)
+    
+    
     loop.set_alarm_in(1, playing )  
+    
 
 def Updatebar(loop=None, user_data=None):
     progres.set_prog(musicplayer.get_Progress())
@@ -116,13 +136,12 @@ def Updatebar(loop=None, user_data=None):
 MediaKeysController(Play_Focused, Next, Prev).start_listening()
 
 
-plw=PlayListWidget(play_callback=play_onclick_callback, focus_callback=focus_callback)
 
-
+plw.Set_Callbacks(focus_callback=focus_callback, play_callback=play_onclick_callback)
 plw.UpdateList(pl.Get_Playlist())
 
 botones=Buttons(play=Play_Focused, stop=Stop, next=Next, prev=Prev  ) 
-footer_stack = urwid.Pile([urwid.Divider("*"), botones, urwid.Divider("*"), progres, urwid.Divider("*")])
+footer_stack = urwid.Pile([urwid.Divider("*"),progres, urwid.Divider("*"),   botones,urwid.Divider("*")])
 
 frame=urwid.AttrMap( Body(header=Header(),body=plw,footer=footer_stack) , 'normal')
 

@@ -4,12 +4,15 @@ from cli.ClickableText import ClickableText
 
 
 class PlayListWidget(urwid.ListBox):
-    def __init__(self, focus_callback=None, play_callback=None):
-        self.focus_callback = focus_callback
-        self.play_callback = play_callback
+    def __init__(self,  ):
+      
         self.listwalker = urwid.SimpleFocusListWalker([])
         super().__init__(self.listwalker)
 
+    def Set_Callbacks(self, focus_callback=None, play_callback=None):
+        self.focus_callback = focus_callback
+        self.play_callback = play_callback
+        
     def UpdateList(self, items):
         self.listwalker.clear()
         for item in items:
@@ -17,11 +20,13 @@ class PlayListWidget(urwid.ListBox):
     
     def UpdateFocus(self, button,index):
         self.set_focus(index)
-        self.focus_callback(button,index)
+        if self.focus_callback:
+            self.focus_callback(button,index)
                
     def Play(self, button,index):
-        self.play_callback(button,index)
-        self.UpdateFocus(button,index)
+        if self.play_callback:
+            self.play_callback(button,index)
+            self.UpdateFocus(button,index)
       
     
     def keypress(self, size, key):
