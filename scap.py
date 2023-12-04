@@ -139,6 +139,10 @@ MediaKeysController(Play_Focused, Next, Prev).start_listening()
 plw.Set_Callbacks(focus_callback=focus_callback, play_callback=play_onclick_callback)
 #plw.UpdateList(pl.Get_Playlist())
 
+
+header=Header("SCAP")
+
+
 def Handle_Command(text):
     if text.startswith('>'):
         text=text[1:].strip() 
@@ -147,10 +151,21 @@ def Handle_Command(text):
         Add(text)
     elif text.startswith('#'):
         text=text[1:].strip()
+        if len(text)==0:
+             
         
-        pl.search(text)
-        plw.set_focus(pl.focused)
-        plw.set_focus_valign('middle') 
+            plw.ResetFilter()
+            if pl.focused >-1:
+                plw.set_focus(pl.focused)
+                plw.set_focus_valign('middle')
+            return "D:"
+            
+        else:
+            if text.startswith('#'):
+                text=text[1:].strip()
+            filter=pl.search(text)
+            plw.SetFilter(filter)
+            return "D:#"
     elif text == 'exit':
         raise urwid.ExitMainLoop()
     elif text == 'play':
@@ -165,7 +180,7 @@ def Handle_Command(text):
         Prev()
     elif text == 'random':
         pl.shuffle = not pl.shuffle
-            
+    return None        
         
  
 command_prompt = TextBox("D:", Handle_Command)
@@ -176,7 +191,7 @@ command_prompt = TextBox("D:", Handle_Command)
 botones=Buttons(play=Play_Focused, stop=Stop, next=Next, prev=Prev  ) 
 footer_stack = urwid.Pile([urwid.Divider("*"),progres, urwid.Divider("*"),   botones,urwid.Divider("*"),command_prompt,urwid.Divider("*")])
 
-frame=urwid.AttrMap( Body(header=Header(),body=plw,footer=footer_stack) , 'normal')
+frame=urwid.AttrMap( Body(header=header,body=plw,footer=footer_stack) , 'normal')
 
 loop = asyncio.get_event_loop()
  

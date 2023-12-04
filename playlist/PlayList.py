@@ -116,9 +116,12 @@ class PlayList:
         self.focused = index
     
  
-    def search(self, text): 
-        for index, file in enumerate(self.files):   
-            if text.lower() in file.lower(): self.focused = index
+    def search(self, text):
+        result=[] 
+        for i in range(len(self.files)):
+            if text.lower() in self.files[i].lower() or text.lower() in self.playlist[i][0].lower():
+                result.append(i) 
+        return result  
         
     def Get_Playlist(self ):
         return self.playlist

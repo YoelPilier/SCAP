@@ -6,7 +6,9 @@ class TextBox(urwid.Edit):
         self.callback = callback
     def keypress(self, size, key):
         if key == 'enter':
-            self.callback(self.get_edit_text())
+            text=self.callback(self.get_edit_text())
+            if text:
+                super().set_caption(text)
             self.set_edit_text('')
         else:
             return super().keypress(size, key)
