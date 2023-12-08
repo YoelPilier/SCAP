@@ -128,6 +128,7 @@ def playing(loop=None, user_data=None):
 
 def Updatebar(loop=None, user_data=None):
     progres.set_prog(musicplayer.get_Progress())
+    progres.set_time(musicplayer.track_playback_time())
     progres.update_progress_bar()
     loop.set_alarm_in(1, Updatebar )         
   

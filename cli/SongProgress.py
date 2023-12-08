@@ -6,9 +6,14 @@ class SongProgressBar(urwid.ProgressBar):
         self.song = "" 
         self.val=0
         self.jumpcallback=jumpcallback
+        self.time="0"
+        
+    def set_time(self, seconds):
+        minutes, seconds = divmod(seconds, 60)
+        self.time=f"{int(minutes)}:{int(seconds):02d}"
     
     def get_text(self):
-        return self.song
+        return self.song+" "+self.time
     
     def set_text(self, text):
         self.song = text
