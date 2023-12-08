@@ -27,11 +27,12 @@ class SongProgressBar(urwid.ProgressBar):
 
     def mouse_event(self, size, event, button, col, row, focus):
         if event == 'mouse press':
-            relative_position = col / size[0]
-            song_progress_point = relative_position * self.done
-            if self.jumpcallback:
-                self.jumpcallback(relative_position)
-            self.set_prog(song_progress_point)
-            self.update_progress_bar()
-            return True
+            if button == 1:
+                relative_position = col / size[0]
+                song_progress_point = relative_position * self.done
+                if self.jumpcallback:
+                    self.jumpcallback(relative_position)
+                self.set_prog(song_progress_point)
+                self.update_progress_bar()
+                return True
  
