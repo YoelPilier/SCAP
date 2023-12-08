@@ -17,7 +17,7 @@ class MusicPlayer:
         self.fadeout=0
         self.length=1
         self.time_manager = PlaybackTimeManager()
-         
+        
         
     def setFadeout(self, time):
         self.fadeout = time   
@@ -115,12 +115,12 @@ class MusicPlayer:
         
     
     def jump_to(self, time):
-        if self.state == PlayerState.REPRODUCIENDO:
-            pos=time*self.length
+        if isinstance(self.length, int) and self.length > 0:
+            if self.state == PlayerState.REPRODUCIENDO:
+                pos = time * self.length
+                pygame.mixer.music.set_pos(pos)
+                self.time_manager.set_time(pos)
             
-            pygame.mixer.music.set_pos(pos)
-            self.time_manager.set_time(pos)
-        
          
    
     

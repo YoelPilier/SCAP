@@ -115,7 +115,9 @@ class PlayList:
     def Set_focused(self, index):
         self.focused = index
     
- 
+    def Get_current(self):
+        return self.files[self.current], self.metadata[self.current]
+    
     def search(self, text):
         result=[] 
         for i in range(len(self.files)):

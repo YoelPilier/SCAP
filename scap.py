@@ -16,9 +16,11 @@ from player.States import PlayerState
  
 musicplayer = MusicPlayer()
 pl=PlayList(musicplayer.valid_ext)
+
+
 progres=SongProgressBar('pg_normal', 'pg_complete', 0, 100, 'pg_smooth',musicplayer.jump_to )
- 
-#pl.add("../../externo/Musica/")
+
+
 
 plw=PlayListWidget()
 

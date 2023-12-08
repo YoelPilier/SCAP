@@ -1,13 +1,12 @@
 import urwid
 
 class SongProgressBar(urwid.ProgressBar):
-    def __init__(self, normal, complete, current=0, done=100, satt=None,jumpcallback=None):
+    def __init__(self, normal, complete, current=0, done=100, satt=None,jumpcallback=None  ):
         super().__init__(normal, complete, current, done, satt)
         self.song = "" 
         self.val=0
         self.jumpcallback=jumpcallback
-        self.time="0"
-        
+        self.time="0" 
     def set_time(self, seconds):
         minutes, seconds = divmod(seconds, 60)
         self.time=f"{int(minutes)}:{int(seconds):02d}"
