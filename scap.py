@@ -17,7 +17,7 @@ from player.States import PlayerState
 musicplayer = MusicPlayer()
 pl=PlayList(musicplayer.valid_ext)
 
-
+header=Header("SCAP")
 progres=SongProgressBar('pg_normal', 'pg_complete', 0, 100, 'pg_smooth',musicplayer.jump_to )
 
 
@@ -33,6 +33,7 @@ def Play(idx):
             plw.set_focus_valign('middle')  
         progres.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}", data[Metadata.DURATION])
         musicplayer.load_file(song, data[Metadata.DURATION])
+        header.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}")
         musicplayer.play()
     except Exception as e:
         pass
@@ -70,6 +71,7 @@ def Next(Button=None):
             plw.set_focus_valign('middle')  
         progres.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}", data[Metadata.DURATION])
         musicplayer.load_file(song, data[Metadata.DURATION])
+        header.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}")
         musicplayer.play()
     except Exception as e:
         pass
@@ -82,6 +84,7 @@ def Prev(Button=None):
             plw.set_focus_valign('middle') 
         progres.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}", data[Metadata.DURATION])
         musicplayer.load_file(song, data[Metadata.DURATION])
+        header.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}")
         musicplayer.play()
     except Exception as e:
         pass
@@ -116,7 +119,7 @@ def focus_callback(Button=None, idx=-1):
     except Exception as e:
         pass
     
- 
+
  
 
 def playing(loop=None, user_data=None):
@@ -144,7 +147,7 @@ plw.Set_Callbacks(focus_callback=focus_callback, play_callback=play_onclick_call
 
 
 
-header=Header("SCAP")
+
 
 
 def Handle_Command(text):
@@ -206,5 +209,6 @@ loop=urwid.MainLoop(frame, palette=palette, event_loop=evl )
 loop.set_alarm_in(1, playing ) 
 loop.set_alarm_in(1, Updatebar )
  
+
 
 loop.run()
