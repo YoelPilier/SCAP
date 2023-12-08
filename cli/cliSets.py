@@ -1,9 +1,12 @@
+color1='black'
+color2='light cyan'
+ 
  
 palette = [ 
-    ('altered', 'black', 'white'),   
-    ('normal', 'white', 'black'),
-    ('pg_normal', 'white', 'black'),
-    ('pg_complete', 'black', 'white'),
+    ('altered', color1,  color2),   
+    ('normal', color2, color1),
+    ('pg_normal', color2, color1),
+    ('pg_complete', color1, color2),
   
-    ('selected', 'black', 'white'),
+    ('selected', color1, color2),
 ]

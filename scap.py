@@ -113,7 +113,8 @@ def focus_callback(Button=None, idx=-1):
         pl.Set_focused(idx)
     except Exception as e:
         pass
-
+    
+ 
  
 
 def playing(loop=None, user_data=None):
@@ -133,7 +134,7 @@ def Updatebar(loop=None, user_data=None):
     loop.set_alarm_in(1, Updatebar )         
   
 
-MediaKeysController(Play_Focused, Next, Prev).start_listening()
+MediaKeysController(Play_Focused, Next, Prev ).start_listening()
 
 
 

@@ -117,6 +117,7 @@ class MusicPlayer:
     def jump_to(self, time):
         if self.state == PlayerState.REPRODUCIENDO:
             pos=time*self.length
+            
             pygame.mixer.music.set_pos(pos)
             self.time_manager.set_time(pos)
         

@@ -35,3 +35,4 @@ class SongProgressBar(urwid.ProgressBar):
             self.set_prog(song_progress_point)
             self.update_progress_bar()
             return True
+ 
