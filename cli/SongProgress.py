@@ -1,4 +1,5 @@
 import urwid
+from playlist import Util
 
 class SongProgressBar(urwid.ProgressBar):
     def __init__(self, normal, complete, current=0, done=100, satt=None,jumpcallback=None  ):
@@ -8,8 +9,7 @@ class SongProgressBar(urwid.ProgressBar):
         self.jumpcallback=jumpcallback
         self.time="0" 
     def set_time(self, seconds):
-        minutes, seconds = divmod(seconds, 60)
-        self.time=f"{int(minutes)}:{int(seconds):02d}"
+        self.time=Util.To_Minutes(seconds) 
     
     def get_text(self):
         return self.song+" "+self.time

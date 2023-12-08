@@ -141,7 +141,7 @@ MediaKeysController(Play_Focused, Next, Prev ).start_listening()
 
 
 plw.Set_Callbacks(focus_callback=focus_callback, play_callback=play_onclick_callback)
-#plw.UpdateList(pl.Get_Playlist())
+
 
 
 header=Header("SCAP")

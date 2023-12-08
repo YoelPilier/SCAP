@@ -5,6 +5,6 @@
         minutes = int(Seconds // 60)
         seconds = round(Seconds % 60)
     
-        return f"{minutes}:{seconds}"
+        return f"{minutes}:{seconds:02d}"
     except Exception as e:
         return "wrong format"
