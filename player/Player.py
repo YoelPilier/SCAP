@@ -24,6 +24,7 @@ class MusicPlayer:
         
     def load_file(self, file_path,length):
         # Obtener la extensión del archivo
+        self.time_manager.reset()
         _,  ext = os.path.splitext(file_path)
         self.length=length  
         if ext.lower()  in self.valid_ext:
@@ -47,6 +48,7 @@ class MusicPlayer:
         return pygame.mixer.music.get_busy()
     
     def __LoadM4A(self, file_path):
+        self.time_manager.reset()
         audio = AudioSegment.from_file(file_path, "m4a")
         byteIO = io.BytesIO()
         audio.export(byteIO, format="wav")
@@ -64,8 +66,9 @@ class MusicPlayer:
                         pygame.mixer.music.stop()
                     self.state = PlayerState.DETENIDO
                     self.prev_audio_file = self.audio_file
-                    self.play()
+                    
                     self.time_manager.start( )
+                    self.play()
                     
                      
        
@@ -75,7 +78,7 @@ class MusicPlayer:
                 self.state = PlayerState.REPRODUCIENDO
                 
             case PlayerState.DETENIDO:
-                
+            
                 if self.ext == '.m4a':
                     byteIO = self.__LoadM4A(self.audio_file)
                     pygame.mixer.music.load(byteIO)

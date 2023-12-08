@@ -3,11 +3,14 @@
 
 class PlaybackTimeManager:
     def __init__(self):
+        self.reset()
+        
+    def reset(self):
         self.__start_time = None
         self.__pause_time = 0
         self.jump_time = 0
         self.__paused = False
-        self.max_time = 0
+        self.max_time = 0    
         
     def start(self ):
         self.jump_time = 0 
