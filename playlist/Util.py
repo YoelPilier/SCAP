@@ -7,4 +7,4 @@
     
         return f"{minutes}:{seconds:02d}"
     except Exception as e:
-        return "wrong format"
+        return "0:00"

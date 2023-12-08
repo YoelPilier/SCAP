@@ -31,7 +31,7 @@ def Play(idx):
         if  pl.current != -1:
             plw.set_focus(pl.current)
             plw.set_focus_valign('middle')  
-        progres.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]} - {data[Metadata.ALBUM]}")
+        progres.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}", data[Metadata.DURATION])
         musicplayer.load_file(song, data[Metadata.DURATION])
         musicplayer.play()
     except Exception as e:
@@ -68,7 +68,7 @@ def Next(Button=None):
         if  pl.current != -1:
             plw.set_focus(pl.current)
             plw.set_focus_valign('middle')  
-        progres.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]} - {data[Metadata.ALBUM]}")
+        progres.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}", data[Metadata.DURATION])
         musicplayer.load_file(song, data[Metadata.DURATION])
         musicplayer.play()
     except Exception as e:
@@ -80,7 +80,7 @@ def Prev(Button=None):
         if  pl.current != -1:
             plw.set_focus(pl.current)
             plw.set_focus_valign('middle') 
-        progres.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]} - {data[Metadata.ALBUM]}")
+        progres.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}", data[Metadata.DURATION])
         musicplayer.load_file(song, data[Metadata.DURATION])
         musicplayer.play()
     except Exception as e:
