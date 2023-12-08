@@ -3,7 +3,7 @@ import pygame
 import io
 from pydub import AudioSegment
 from player.States import PlayerState
-
+from player.PlaybackTimeManager import PlaybackTimeManager
 
 class MusicPlayer:
     def __init__(self):
@@ -16,6 +16,8 @@ class MusicPlayer:
         self.valid_ext = ['.ogg', '.wav', '.mp3', '.flac', '.m4a']
         self.fadeout=0
         self.length=1
+        self.time_manager = PlaybackTimeManager()
+         
         
     def setFadeout(self, time):
         self.fadeout = time   
@@ -23,7 +25,7 @@ class MusicPlayer:
     def load_file(self, file_path,length):
         # Obtener la extensión del archivo
         _,  ext = os.path.splitext(file_path)
-        self.length=length
+        self.length=length  
         if ext.lower()  in self.valid_ext:
             self.ext = ext
             if self.audio_file == None:
@@ -63,9 +65,13 @@ class MusicPlayer:
                     self.state = PlayerState.DETENIDO
                     self.prev_audio_file = self.audio_file
                     self.play()
+                    self.time_manager.start( )
+                    
+                     
        
             case PlayerState.EN_PAUSA:
                 pygame.mixer.music.unpause()
+                self.time_manager.resume()
                 self.state = PlayerState.REPRODUCIENDO
                 
             case PlayerState.DETENIDO:
@@ -76,6 +82,7 @@ class MusicPlayer:
                 else:
                     pygame.mixer.music.load(self.audio_file)
                 pygame.mixer.music.play()
+                self.time_manager.start( )
                 self.state = PlayerState.REPRODUCIENDO
         return
     
@@ -83,6 +90,7 @@ class MusicPlayer:
         if self.state == PlayerState.REPRODUCIENDO:
             pygame.mixer.music.pause()
             self.state = PlayerState.EN_PAUSA
+            self.time_manager.pause()
             return
      
    
@@ -90,6 +98,7 @@ class MusicPlayer:
         if self.state == PlayerState.REPRODUCIENDO:
             pygame.mixer.music.stop()
             self.state = PlayerState.DETENIDO
+            self.time_manager.stop()
             return
         
         
@@ -101,19 +110,27 @@ class MusicPlayer:
         return pygame.mixer.music.get_volume()
   
       
-    def track_playback_time(self):
-       return pygame.mixer.music.get_pos() / 1000
+    def track_playback_time(self):        
+       return self.time_manager.get_time()
+        
     
     def jump_to(self, time):
-        pygame.mixer.music.set_pos(time)
+        if self.state == PlayerState.REPRODUCIENDO:
+            pos=time*self.length
+            pygame.mixer.music.set_pos(pos)
+            self.time_manager.set_time(pos)
+        
          
    
     
     def get_Progress(self):
         try:
-            return (self.track_playback_time() / self.length) * 100
+            value=self.time_manager.get_time()  / self.length
+          
+            return   value*100
         except Exception as e:
             return 0     
+        
 
  
  
