@@ -6,6 +6,7 @@ class Header(urwid.Pile):
         self.basetext = text
         self.text_widget = urwid.Text(text, align="center")
         super().__init__([
+            urwid.Divider("*"),
             self.text_widget,
             urwid.Divider("*")
         ])
