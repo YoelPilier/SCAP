@@ -146,7 +146,9 @@ MediaKeysController(Play_Focused, Next, Prev ).start_listening()
 plw.Set_Callbacks(focus_callback=focus_callback, play_callback=play_onclick_callback)
 
 
-
+def clear(loop=None, user_data=None):
+    loop.screen.clear()
+    loop.set_alarm_in(60, clear )
 
 
 
@@ -193,6 +195,7 @@ def Handle_Command(text):
 command_prompt = TextBox("D:", Handle_Command)
  
  
+ 
 
 
 botones=Buttons(play=Play_Focused, stop=Stop, next=Next, prev=Prev  ) 
@@ -202,13 +205,24 @@ frame=urwid.AttrMap( Body(header=header,body=plw,footer=footer_stack) , 'normal'
 
 loop = asyncio.get_event_loop()
  
+ 
+ 
+ 
 
 evl=urwid.AsyncioEventLoop(loop=loop)
 
 loop=urwid.MainLoop(frame, palette=palette, event_loop=evl )
+
+
+
+
 loop.set_alarm_in(1, playing ) 
 loop.set_alarm_in(1, Updatebar )
- 
+
+
+
+
+loop.set_alarm_in(60,clear ) 
 
 
 loop.run()
