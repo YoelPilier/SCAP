@@ -21,6 +21,9 @@ header=Header("SCAP")
 progres=SongProgressBar('pg_normal', 'pg_complete', 0, 100, 'pg_smooth',musicplayer.jump_to )
 
 
+def set_taskbar_title(song_name):
+    print(f'\033]0;{song_name}\007', end='', flush=True)
+
 
 plw=PlayListWidget()
 
@@ -34,7 +37,9 @@ def Play(idx):
         progres.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}", data[Metadata.DURATION])
         musicplayer.load_file(song, data[Metadata.DURATION])
         header.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}")
+        set_taskbar_title(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}")
         musicplayer.play()
+        clear()
     except Exception as e:
         pass
 
@@ -57,9 +62,9 @@ def Play_Focused(Button=None):
             musicplayer.play()
         if state == PlayerState.REPRODUCIENDO:
             musicplayer.pause()
-        
+        clear()
     except Exception as e:
-        pass
+        clear()
     
         
 
@@ -72,9 +77,11 @@ def Next(Button=None):
         progres.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}", data[Metadata.DURATION])
         musicplayer.load_file(song, data[Metadata.DURATION])
         header.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}")
+        set_taskbar_title(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}")
         musicplayer.play()
+        clear()
     except Exception as e:
-        pass
+        clear()
 
 def Prev(Button=None):
     try:
@@ -85,9 +92,11 @@ def Prev(Button=None):
         progres.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}", data[Metadata.DURATION])
         musicplayer.load_file(song, data[Metadata.DURATION])
         header.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}")
+        set_taskbar_title(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}")
         musicplayer.play()
+        clear()
     except Exception as e:
-        pass
+        clear()
     
  
     
@@ -108,7 +117,8 @@ def Add(ruta):
 
 def play_onclick_callback( Button=None, idx=-1):
     try:
-        Play(idx)
+        if pl.current != idx:
+            Play(idx)
     except Exception as e:
         pass
     
@@ -146,9 +156,8 @@ MediaKeysController(Play_Focused, Next, Prev ).start_listening()
 plw.Set_Callbacks(focus_callback=focus_callback, play_callback=play_onclick_callback)
 
 
-def clear(loop=None, user_data=None):
-    loop.screen.clear()
-    loop.set_alarm_in(60, clear )
+def clear( ):
+    loop.screen.clear() 
 
 
 
@@ -221,9 +230,7 @@ loop.set_alarm_in(1, playing )
 loop.set_alarm_in(1, Updatebar )
 
 
-
-
-loop.set_alarm_in(60,clear ) 
+ 
 
 
 loop.run()
