@@ -39,7 +39,8 @@ def Play(idx):
         header.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}")
         set_taskbar_title(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}")
         musicplayer.play()
-        clear()
+    
+        loop.set_alarm_in(3, clear )  
     except Exception as e:
         pass
 
@@ -62,7 +63,7 @@ def Play_Focused(Button=None):
             musicplayer.play()
         if state == PlayerState.REPRODUCIENDO:
             musicplayer.pause()
-        clear()
+        loop.set_alarm_in(3, clear )  
     except Exception as e:
         clear()
     
@@ -79,7 +80,7 @@ def Next(Button=None):
         header.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}")
         set_taskbar_title(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}")
         musicplayer.play()
-        clear()
+        loop.set_alarm_in(3, clear )  
     except Exception as e:
         clear()
 
@@ -94,7 +95,7 @@ def Prev(Button=None):
         header.set_text(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}")
         set_taskbar_title(f"{data[Metadata.TITLE]} - {data[Metadata.ARTIST]}")
         musicplayer.play()
-        clear()
+        loop.set_alarm_in(3, clear )  
     except Exception as e:
         clear()
     
@@ -156,7 +157,7 @@ MediaKeysController(Play_Focused, Next, Prev ).start_listening()
 plw.Set_Callbacks(focus_callback=focus_callback, play_callback=play_onclick_callback)
 
 
-def clear( ):
+def clear(l=None, u=None ):
     loop.screen.clear() 
 
 
