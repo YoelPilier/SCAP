@@ -48,7 +48,7 @@ class MusicPlayer:
         return pygame.mixer.music.get_busy()
     
     def __LoadM4A(self, file_path):
-        self.time_manager.reset()
+        self.time_manager.reset()   
         audio = AudioSegment.from_file(file_path, "m4a")
         byteIO = io.BytesIO()
         audio.export(byteIO, format="wav")

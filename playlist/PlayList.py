@@ -14,7 +14,8 @@ class PlayList:
         self.playlist = []
         self.current = -1 
         self.shuffle = True
-        self.focused = -1    
+        self.focused = -1
+        self.first = True    
         # Obtener el directorio home del usuario actual
         home_dir = os.path.expanduser("~")
 
@@ -92,7 +93,15 @@ class PlayList:
         
     def Jump(self, index):
         if index < len(self.files):
-            self.current=index
+            if self.first:
+                if self.shuffle:
+                    self.current=random.choice(range(len(self.files)))
+                else:
+                                    
+                    self.current=index if index >=0 else 0
+                self.first=False
+            else:
+                self.current=index
             self.focused = self.current
             self.queue.append(self.current)
             return self.files[self.current], self.metadata[self.current]

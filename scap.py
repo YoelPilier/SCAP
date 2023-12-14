@@ -188,7 +188,7 @@ def Handle_Command(text):
     elif text == 'exit':
         raise urwid.ExitMainLoop()
     elif text == 'play':
-        Play(pl.focused)
+        Play_Focused()
     elif text == 'pause':
         Pause()
     elif text == 'stop':
