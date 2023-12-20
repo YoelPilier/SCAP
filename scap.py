@@ -208,9 +208,9 @@ command_prompt = TextBox("D:", Handle_Command)
  
 
 
-#botones=Buttons(play=Play_Focused, stop=Stop, next=Next, prev=Prev  ) 
-#footer_stack = urwid.Pile([urwid.Divider("*"),progres, urwid.Divider("*"),   botones,urwid.Divider("*"),command_prompt,urwid.Divider("*")])
-footer_stack = urwid.Pile([urwid.Divider("*"),progres, urwid.Divider("*"),    command_prompt,urwid.Divider("*")])
+botones=Buttons(play=Play_Focused, stop=Stop, next=Next, prev=Prev  ) 
+footer_stack = urwid.Pile([urwid.Divider("*"),progres, urwid.Divider("*"),   botones,urwid.Divider("*"),command_prompt,urwid.Divider("*")])
+#footer_stack = urwid.Pile([urwid.Divider("*"),progres, urwid.Divider("*"),    command_prompt,urwid.Divider("*")])
 
 frame=urwid.AttrMap( Body(header=header,body=plw,footer=footer_stack) , 'normal')
 
