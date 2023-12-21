@@ -1,4 +1,6 @@
-﻿Dependencias:
+﻿Reproductor casi listo
+
+Dependencias:
 
 -mutagen
 -pygame
