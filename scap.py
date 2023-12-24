@@ -136,7 +136,11 @@ def focus_callback(Button=None, idx=-1):
         pl.Set_focused(idx)
     except Exception as e:
         pass
-    
+def on_check_change(checkbox, new_state, user_data=None):
+    if new_state:
+        pl.shuffle = True
+    else:
+        pl.shuffle = False
 
  
 
@@ -215,7 +219,7 @@ command_prompt = TextBox("D:", Handle_Command)
  
 
 
-botones=Buttons(play=Play_Focused, stop=Stop, next=Next, prev=Prev  ) 
+botones=Buttons(play=Play_Focused, stop=Stop, next=Next, prev=Prev, on_check_change=on_check_change  ) 
 footer_stack = urwid.Pile([urwid.Divider("*"),progres, urwid.Divider("*"),   botones,urwid.Divider("*"),command_prompt,urwid.Divider("*")])
 #footer_stack = urwid.Pile([urwid.Divider("*"),progres, urwid.Divider("*"),    command_prompt,urwid.Divider("*")])
 
