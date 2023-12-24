@@ -23,7 +23,7 @@ arg=parser.parse_args()
  
 musicplayer = MusicPlayer()
 pl=PlayList(musicplayer.valid_ext)
-
+buscando=False
 header=Header("SCAP")
 progres=SongProgressBar('pg_normal', 'pg_complete', 0, 100, 'pg_smooth',musicplayer.jump_to )
 
@@ -174,16 +174,18 @@ def clear(l=None, u=None ):
 
 
 def Handle_Command(text):
+    global buscando
     if text.startswith('>'):
         text=text[1:].strip() 
          
         
         Add(text)
-    elif text.startswith('#'):
-        text=text[1:].strip()
+    elif buscando or text.startswith('#'):
+        if text.startswith('#'):
+            text=text[1:].strip()
         if len(text)==0:
              
-        
+            buscando=False
             plw.ResetFilter()
             if pl.focused >-1:
                 plw.set_focus(pl.focused)
@@ -195,6 +197,7 @@ def Handle_Command(text):
                 text=text[1:].strip()
             filter=pl.search(text)
             plw.SetFilter(filter)
+            buscando=True
             return "D:#"
     elif text == 'exit':
         raise urwid.ExitMainLoop()
