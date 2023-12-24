@@ -1,4 +1,4 @@
 #! /usr/bin/fish
 
 source ~/Repositorios/SCAP/env/bin/activate.fish
-python ~/Repositorios/SCAP/scap.py
+python ~/Repositorios/SCAP/scap.py $argv

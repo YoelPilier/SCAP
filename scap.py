@@ -12,7 +12,14 @@ from playlist.PlayList import PlayList
 from playlist import Metadata
 from player.Player import MusicPlayer
 from player.States import PlayerState
+import argparse
 
+
+
+parser = argparse.ArgumentParser(description='SCAP - Simple Console Audio Player')
+parser.add_argument('-dir' , type=str, help='Directorio de la musica')
+
+arg=parser.parse_args()
  
 musicplayer = MusicPlayer()
 pl=PlayList(musicplayer.valid_ext)
@@ -230,7 +237,9 @@ loop=urwid.MainLoop(frame, palette=palette, event_loop=evl )
 loop.set_alarm_in(1, playing ) 
 loop.set_alarm_in(1, Updatebar )
 
-
+if arg.dir:
+    Add(arg.dir)
+    Play_Focused()
  
 
 
