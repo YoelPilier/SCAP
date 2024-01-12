@@ -7,7 +7,7 @@ from player.PlaybackTimeManager import PlaybackTimeManager
 
 class MusicPlayer:
     def __init__(self):
-        # Inicializar mixer con canales estéreo
+        
         pygame.mixer.init(channels=2)
         self.audio_file = None
         self.prev_audio_file = None
@@ -22,8 +22,7 @@ class MusicPlayer:
     def setFadeout(self, time):
         self.fadeout = time   
         
-    def load_file(self, file_path,length):
-        # Obtener la extensión del archivo
+    def load_file(self, file_path,length): 
         self.time_manager.reset()
         _,  ext = os.path.splitext(file_path)
         self.length=length  

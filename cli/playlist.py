@@ -34,7 +34,7 @@ class PlayListWidget(urwid.ListBox):
     def SetFilter(self, filter):
         self.filterlist=filter
         self.actualfilteritem=0
-        if self.filterlist:  # Comprobar si la lista no está vacía
+        if self.filterlist:  
             self.UpdateFocus(None,self.filterlist[self.actualfilteritem])
        
         
@@ -58,7 +58,7 @@ class PlayListWidget(urwid.ListBox):
                 else:
                     self.UpdateFocus(None,index=self.focus_position + 1)
             except IndexError:
-                pass  # ya en el último elemento
+                pass  
         elif key == 'up':
             if self.focus_position > 0:
                 if len(self.filterlist)>0:

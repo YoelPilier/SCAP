@@ -1,6 +1,6 @@
-﻿Reproductor casi listo
+﻿# SCAP - Simple Console Audio Player
 
-Dependencias:
+Libraries:
 
 -mutagen
 -pygame
