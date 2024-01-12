@@ -3,6 +3,7 @@ import random
 import time
 import playlist.Metadata as Metadata
 from playlist.Util import To_Minutes
+from concurrent.futures import ThreadPoolExecutor
 
 class PlayList:
     def __init__(self, valid_ext):
@@ -27,29 +28,29 @@ class PlayList:
     def add(self, file_path):
         
         if os.path.isfile(file_path):
-            _, ext = os.path.splitext(file_path)
-            if ext.lower() in self.valid_ext:
-                self.metadata.append(Metadata.get_song_info(file_path, ext))
-                self.files.append(file_path)
-                meta=Metadata.get_song_info(file, ext)
-                meta[Metadata.INDEX]=len(self.files)-1                         
-                self.metadata.append(meta)
-                self.playlist.append((f"{meta[Metadata.INDEX]+1} - {meta[Metadata.TITLE]} - {meta[Metadata.ARTIST]} - {meta[Metadata.ALBUM]} - {To_Minutes(meta[Metadata.DURATION])}",meta[Metadata.INDEX]))
+            self.__addsingle(file_path)
         elif os.path.isdir(file_path):
-            for dirpath, _, filenames in os.walk(file_path):
-                for filename in filenames:
-                     
-                    _, ext = os.path.splitext(filename)
-                    if ext.lower() in self.valid_ext:
-                        file=os.path.join(dirpath, filename)
-                        self.files.append(file)
-                        meta=Metadata.get_song_info(file, ext)
-                        meta[Metadata.INDEX]=len(self.files)-1                         
-                        self.metadata.append(meta)
-                        
-                        self.playlist.append((f"{meta[Metadata.INDEX]+1} - {meta[Metadata.TITLE]} - {meta[Metadata.ARTIST]} - {meta[Metadata.ALBUM]} - {To_Minutes(meta[Metadata.DURATION])}",meta[Metadata.INDEX]))
-
-                                                
+            routes=self.__getRoutes(file_path)
+            with ThreadPoolExecutor() as executor:
+                executor.map(self.__addsingle, routes) 
+    
+    def __getRoutes(self, file_path):
+         
+        routes=[]
+        for dirpath, _, filenames in os.walk(file_path):
+            for filename in filenames:
+                routes.append(os.path.join(dirpath, filename))
+        return routes
+    
+    def __addsingle(self, file_path):
+        _, ext = os.path.splitext(file_path)
+        if ext.lower() in self.valid_ext:
+            meta=Metadata.get_song_info(file_path, ext)
+            self.files.append(file_path)             
+            meta[Metadata.INDEX]=len(self.files)-1                         
+            self.metadata.append(meta)
+            self.playlist.append((f"{meta[Metadata.INDEX]+1} - {meta[Metadata.TITLE]} - {meta[Metadata.ARTIST]} - {meta[Metadata.ALBUM]} - {To_Minutes(meta[Metadata.DURATION])}",meta[Metadata.INDEX]))
+                                               
     def remove(self, index):
         if index < len(self.files):
             self.files.pop(index)
