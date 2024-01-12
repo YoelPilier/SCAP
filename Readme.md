@@ -2,8 +2,8 @@
 
 Libraries:
 
--mutagen
--pygame
--pydub
--urwid
--pynput
+- mutagen
+- pygame
+- pydub
+- urwid
+- pynput
