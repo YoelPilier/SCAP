@@ -1,5 +1,7 @@
+
+
 color1='black'
-color2='light cyan'
+color2='white'
  
  
 palette = [ 
