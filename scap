@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#! /usr/bin/fish
 
-source ~/Repositorios/SCAP/env/bin/activate
+source ~/Repositorios/SCAP/env/bin/activate.fish
 alacritty -e python ~/Repositorios/SCAP/scap.py $argv &
